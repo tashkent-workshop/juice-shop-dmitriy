@@ -7,7 +7,7 @@ import { Component, type OnInit } from '@angular/core'
 import { UntypedFormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ImageCaptchaService } from '../Services/image-captcha.service'
 import { DataSubjectService } from '../Services/data-subject.service'
-import { DomSanitizer } from '@angular/platform-browser'
+
 import { MatButtonModule } from '@angular/material/button'
 import { MatInputModule } from '@angular/material/input'
 import { MatLabel, MatFormFieldModule, MatHint, MatError } from '@angular/material/form-field'
@@ -35,7 +35,7 @@ export class DataExportComponent implements OnInit {
   public presenceOfCaptcha: boolean = false
   public userData: any
 
-  constructor (public sanitizer: DomSanitizer, private readonly imageCaptchaService: ImageCaptchaService, private readonly dataSubjectService: DataSubjectService) { }
+  constructor (private readonly imageCaptchaService: ImageCaptchaService, private readonly dataSubjectService: DataSubjectService) { }
   ngOnInit (): void {
     this.needCaptcha()
     this.dataRequest = {}
@@ -50,9 +50,9 @@ export class DataExportComponent implements OnInit {
     }
   }
 
-  getNewCaptcha () {
+   getNewCaptcha () {
     this.imageCaptchaService.getCaptcha().subscribe((data: any) => {
-      this.captcha = this.sanitizer.bypassSecurityTrustHtml(data.image)
+      this.captcha = data.image
     })
   }
 
