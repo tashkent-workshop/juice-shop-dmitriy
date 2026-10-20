@@ -69,10 +69,10 @@ router.post('/', async (req: Request<Record<string, unknown>, Record<string, unk
       const filePath: string = path.resolve(req.body.layout).toLowerCase()
       const isForbiddenFile: boolean = (filePath.includes('ftp') || filePath.includes('ctf.key') || filePath.includes('encryptionkeys'))
       if (!isForbiddenFile) {
-        res.render('dataErasureResult', {
-          ...req.body
+                res.render('dataErasureResult', {
+          ...req.body,
+          layout: filePath
         }, (error, html) => {
-          if (!html || error) {
             next(new Error(error.message))
           } else {
             const sendlfrResponse: string = html.slice(0, 100) + '......'
